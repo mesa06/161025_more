@@ -1,0 +1,199 @@
+Lab: 觀察與記錄程式執行時間
+
+
+
+
+0.	設定 XDebug
+
+
+0.1	如果 Apache 正在執行，點按 Workspace 工具列的 Stop 停止 Apache
+
+
+0.2	點兩下左邊工作區第一層資料夾的 php.ini 檔以開啟文件。
+
+
+0.3	貼入下列內容到檔案尾端:
+[XDebug]
+xdebug.remote_connect_back=1
+xdebug.profiler_enable = 1
+xdebug.profiler_output_name = xdebug.out.%t
+xdebug.profiler_output_dir = /tmp
+xdebug.profiler_enable_trigger = 1
+
+
+0.4	儲存並且關閉 php.ini 檔。
+
+
+
+
+1.	以 microtime() 度量程式執行時間。
+
+
+1.1	建立一個新的 PHP 程式，檔名: test_microtime.php
+
+
+1.2	呼叫 microtime() 並且記下程式開始時間，例如:
+	$startTime = microtime();
+
+
+1.3	呼叫 usleep(10000); 模擬程式執行階段。
+	<Note> usleep(10000) 約暫停 0.01 秒。
+
+
+1.4	再次呼叫 microtime() 並且記下程式結束時間，例如:
+	$endTime = microtime();
+
+
+1.5	計算並且顯示兩次時間差。
+
+
+
+
+2.	使用 Benchmark 度量程式執行時間
+
+
+2.1	建立一個新的 PHP 程式，檔名: test_Benchmark_Timer.php，內容如下:
+	<Note> Benchmark 資料夾的程式源自於: https://github.com/pear/Benchmark
+
+<?php
+require_once  "Benchmark/Timer.php";
+
+$timer = new BenchMark_Timer();
+
+$timer->start();
+usleep(10000);
+$timer->stop();
+
+$profiling = $timer->getProfiling();
+
+echo "<pre>";
+print_r($profiling);
+echo "</pre>";
+
+?>
+
+
+2.7	執行 test_Benchmark_Timer.php 並且觀察執行結果。
+	<Note> 請描述如何使用 BenchMark_Timer 物件。
+
+
+2.8	在 usleep(10000); 與  stop() 之間，加寫下列程式(以模擬又執行了一些程式):
+
+$timer->setMarker('Flag 1');
+usleep(10000);
+$timer->setMarker('Flag 2');
+usleep(20000);
+
+
+2.9	執行 test_Benchmark_Timer.php 並且觀察執行結果。
+
+Array
+(
+    [0] => Array
+        (
+            [name] => Start
+            [time] => 1417191384.25575900
+            [diff] => -
+            [total] => -
+        )
+
+    [1] => Array
+        (
+            [name] => Flag 1
+            [time] => 1417191384.26307700
+            [diff] => 0.007318
+            [total] => 0.007318
+        )
+
+    [2] => Array
+        (
+            [name] => Flag 2
+            [time] => 1417191384.27952100
+            [diff] => 0.016444
+            [total] => 0.023762
+        )
+
+    [3] => Array
+        (
+            [name] => Stop
+            [time] => 1417191384.31061700
+            [diff] => 0.031096
+            [total] => 0.054858
+        )
+
+)
+
+
+
+
+3.	安裝並試用 Webgrind
+
+
+3.0 觀察 /tmp 資料夾是否多出一堆以 xdebug 開頭的檔案。
+
+
+3.1	將 webgrind 資料夾 Ctrl+C Ctrl-V 複製貼到 Workspace 之下
+
+    <Note> 完成後，目錄結構像這樣:
+        lab
+          +- webgrind
+    <Note> webgrind 資料夾的程式源自於: https://github.com/jokkedk/webgrind
+
+
+3.2	執行 webgrind 程式
+	
+	點按 Workspace 工具列的 Run Project 啟動 Apache
+	在瀏覽器輸入下列網址，如果一切順利，畫面會出現目錄清單。
+
+	https://工作區名稱-帳號.c9users.io/webgrind
+	例如:
+	https://lab-appdev1226-1.c9users.io/webgrind
+
+	(Hint: Workspace 下方的終端機視窗會有伺服器的網址。)
+
+	(Hint: 快捷鍵 Ctrl + F 可置換本文件的 lab-appdev1226，
+       		改成你的工作區名稱-帳號。)
+
+
+3.3	下拉式選單選擇剛才的 test_Benchmark_Timer.php 執行記錄，
+	Show: 100%
+	Hide PHP functions: 打勾
+	點按 <Update> 按鈕。
+	
+	
+3.4	觀察右邊兩欄 Cost，哪一項的成本最高?
+	
+
+3.5	點按表格中的 {main} 字樣，觀察哪幾項的 Total Call Cost 較高。
+
+
+
+
+4.	還原設定
+    (請還原設定。在 Cloud9 測試的結果，如果不還原設定，
+    在 IDE 設定中斷點將沒有作用。)
+
+
+4.1	如果 Apache 正在執行，點按 Workspace 工具列的 Stop 停止 Apache
+
+
+4.2	點兩下左邊工作區第一層資料夾的 php.ini 檔以開啟文件。
+
+
+4.3 去除文件結尾處的下列設定(或者加上 ; 註解)，存檔。
+
+[XDebug]
+xdebug.remote_connect_back=1
+xdebug.profiler_enable = 1
+xdebug.profiler_output_name = xdebug.out.%t
+xdebug.profiler_output_dir = /tmp
+xdebug.profiler_enable_trigger = 1
+
+
+4.6 新增一個 Terminal，依序輸入下列指令:
+
+cd /tmp
+rm xdebug*
+exit
+
+
