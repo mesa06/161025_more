@@ -1,0 +1,11 @@
+1. Copy autoload.php to c:\php
+
+2. Copy MyMathLib.php to c:\php\includes
+
+3. Edit php.ini, modify auto_prepend_file:
+   auto_prepend_file = "c:\php\autoload.php"
+
+4. Restart Apache
+
+5. Run test.php for testing.
+

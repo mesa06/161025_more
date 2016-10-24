@@ -1,0 +1,19 @@
+Source code come from:
+http://www.fluffycat.com/PHP-Design-Patterns/Command/
+
+
+
+
+BEGIN TESTING COMMAND PATTERN
+
+book after creation: 
+Design Patterns by Gamma, Helm, Johnson, and Vlissides
+
+book after stars on: 
+Design*Patterns by Gamma,*Helm,*Johnson,*and*Vlissides
+
+book after stars off: 
+Design Patterns by Gamma, Helm, Johnson, and Vlissides
+
+END TESTING COMMAND PATTERN
+

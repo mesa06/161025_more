@@ -1,0 +1,13 @@
+source code come from:
+http://www.fluffycat.com/PHP-Design-Patterns/Facade/
+
+
+
+
+BEGIN TESTING FACADE PATTERN
+
+Original book title: Design Patterns
+
+Reversed book title: dESIGNpATTERNS
+
+END TESTING FACADE PATTERN

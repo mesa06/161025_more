@@ -1,0 +1,28 @@
+sorce code come from:
+http://www.fluffycat.com/PHP-Design-Patterns/Interpreter/
+
+
+
+
+BEGIN TESTING INTERPRETER PATTERN
+
+test 1 - invalid request missing "book"
+Can not process, can only process book author #, 
+book title #, or book author title #
+
+test 2 - valid book author request
+Larry Truett
+
+test 3 - valid book title request
+MySQL for Cats
+
+test 4 - valid book author title request
+PHP for Cats by Larry Truett
+
+test 5 - invalid request with invalid book number
+Can not process, there is no book # 3
+
+test 6 - invalid request with nuo numeric book number
+Can not process, book # must be numeric.
+
+END TESTING INTERPRETER PATTERN
